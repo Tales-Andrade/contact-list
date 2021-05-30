@@ -12,7 +12,9 @@ const flash = require('connect-flash');
 
 const routes = require('./routes');
 const path = require('path');
-const { globalMiddleware, anotherMiddleware } = require('./src/middlewares/middleware');
+const helmet = require('helmet');
+const csrf = require('csurf');
+const { globalMiddleware, checkCsrfError, csrfMiddleware } = require('./src/middlewares/middleware');
 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
@@ -25,6 +27,7 @@ mongoose.connect(dbUrl, {
     .catch(e => console.log(e));
 
 
+app.use(helmet());
 
 // Enables to receive req.body
 app.use(express.urlencoded({ extended: true }));
@@ -47,9 +50,11 @@ app.use(flash());
 app.set('views', path.resolve(__dirname, 'src', 'views'));
 app.set('view engine', 'ejs');
 
+app.use(csrf());
 // Our Middlewares
 app.use(globalMiddleware);
-app.use(anotherMiddleware);
+app.use(checkCsrfError);
+app.use(csrfMiddleware);
 app.use(routes);
 
 app.on('ready!', () => {
