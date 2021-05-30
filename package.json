@@ -1,0 +1,38 @@
+{
+  "name": "contact-list",
+  "version": "1.0.0",
+  "description": "This project was done following a JavaScript to learn new technologies such as Google Cloud Platform, NGINX, etc",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js --ignore public --ignore frontend",
+    "dev": "webpack -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tales-Andrade/contact-list.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tales-Andrade/contact-list/issues"
+  },
+  "homepage": "https://github.com/Tales-Andrade/contact-list#readme",
+  "dependencies": {
+    "core-js": "^3.3.2",
+    "css-loader": "^5.2.6",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "regenerator-runtime": "^0.13.3",
+    "style-loader": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "babel-loader": "^8.0.6",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9"
+  }
+}
