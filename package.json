@@ -2,7 +2,7 @@
   "name": "contact-list",
   "version": "1.0.0",
   "description": "This project was done following a JavaScript to learn new technologies such as Google Cloud Platform, NGINX, etc",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js --ignore public --ignore frontend",
@@ -20,26 +20,27 @@
   },
   "homepage": "https://github.com/Tales-Andrade/contact-list#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^4.4.1",
-    "core-js": "^3.3.2",
+    "core-js": "^3.13.1",
     "css-loader": "^5.2.6",
     "csurf": "^1.11.0",
     "dotenv": "^10.0.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
-    "helmet": "^4.6.0",
     "mongoose": "^5.12.12",
-    "regenerator-runtime": "^0.13.3",
-    "style-loader": "^1.0.0"
+    "regenerator-runtime": "^0.13.7",
+    "style-loader": "^2.0.0",
+    "validator": "^13.6.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.6.4",
-    "@babel/core": "^7.6.4",
-    "@babel/preset-env": "^7.6.3",
-    "babel-loader": "^8.0.6",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9"
+    "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.4",
+    "babel-loader": "^8.2.2",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.0"
   }
 }
