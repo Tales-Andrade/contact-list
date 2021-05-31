@@ -1,20 +1,31 @@
-require('dotenv').config()
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 
 const express = require('express');
+const path = require('path');
 const app = express();
 const mongoose = require('mongoose');
-const dbUrl = process.env.DB_URL;
+const engine = require('ejs-mate');
 const session = require('express-session');
-const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
-const routes = require('./routes');
-const path = require('path');
+const ExpressError = require('./public/assets/js/ExpressError');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./src/models/users');
+const mongoSanitize = require('express-mongo-sanitize');
+const userRoutes = require('./src/routes/users');
 //const helmet = require('helmet');
 const csrf = require('csurf');
 const { globalMiddleware, checkCsrfError, csrfMiddleware } = require('./src/middlewares/middleware');
 
+const MongoStore = require('connect-mongo');
+
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/contact-list';
+
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
+    useCreateIndex: true,
     useUnifiedTopology: true,
     useFindAndModify: false
 })
@@ -24,13 +35,15 @@ mongoose.connect(dbUrl, {
     })
     .catch(e => console.log(e));
 
-
-//app.use(helmet());
+app.engine('ejs', engine);
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'src', 'views'));
 
 // Enables to receive req.body
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static(path.resolve(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(mongoSanitize());
 
 const sessionOptions = session({
     secret: 'akasdfj0út23453456+54qt23qv  qwf qwer qwer qewr asdasdasda a6()',
@@ -38,22 +51,45 @@ const sessionOptions = session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 7,
+        expires: Date.now() + (1000 * 60 * 60 * 24 * 7),
+        maxAge: (1000 * 60 * 60 * 24 * 7),
         httpOnly: true
     }
 });
 app.use(sessionOptions);
 app.use(flash());
+//app.use(helmet());
 
-app.set('views', path.resolve(__dirname, 'src', 'views'));
-app.set('view engine', 'ejs');
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use(csrf());
 // Our Middlewares
 app.use(globalMiddleware);
 app.use(checkCsrfError);
 app.use(csrfMiddleware);
-app.use(routes);
+
+app.use('/', userRoutes);
+
+app.get('/', (req, res) => {
+    res.render('index');
+});
+
+app.all('*', (req, res, next) => {
+    next(new ExpressError('Page Not Found', 404));
+});
+
+app.use((err, req, res, next) => {
+    const { statusCode = 500 } = err;
+
+    if (!err.message) err.message = 'An error has occurred';
+
+    res.status().render('error', { err });
+});
 
 app.on('ready!', () => {
     app.listen(3000, () => {

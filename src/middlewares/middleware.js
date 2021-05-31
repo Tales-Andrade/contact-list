@@ -1,6 +1,7 @@
 module.exports.globalMiddleware = (req, res, next) => {
-    res.locals.errors = req.flash('errors');
+    res.locals.error = req.flash('error');
     res.locals.success = req.flash('success');
+    res.locals.currentUser = req.user;
     next();
 }
 
@@ -20,4 +21,10 @@ module.exports.checkCsrfError = (err, req, res, next) => {
 module.exports.csrfMiddleware = (req, res, next) => {
     res.locals.csrfToken = req.csrfToken();
     next();
+}
+
+module.exports.catchAsync = func => {
+    return (req, res, next) => {
+        func(req, res, next).catch(next);
+    }
 }
