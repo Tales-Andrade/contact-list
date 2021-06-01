@@ -1,0 +1,43 @@
+<% layout('layouts/boilerplate') %>
+    <div class="row">
+        <h1 class="text-center">
+            New Contact
+        </h1>
+        <div class="col-md-6 offset-md-3">
+            <form action="/contacts" method="POST" class="validated-form" novalidate>
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <div class="mb-3">
+                    <label class="form-label" for="name">Name</label>
+                    <input class="form-control" type="text" id="name" name="contact[name]" required>
+                    <div class="valid-feedback">
+                        This is a valid input!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="lastName">Last Name</label>
+                    <input class="form-control" type="text" id="lastName" name="contact[lastName]" required>
+                    <div class="valid-feedback">
+                        This is a valid input!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="email">Email</label>
+                    <input class="form-control" type="email" id="email" name="contact[email]" required>
+                    <div class="valid-feedback">
+                        This is a valid input!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="telephone">Telephone</label>
+                    <input class="form-control" type="text" id="telephone" name="contact[telephone]" required>
+                    <div class="valid-feedback">
+                        This is a valid input!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-success">Add Contacts</button>
+                </div>
+            </form>
+            <button class="btn btn-danger"><a href="/contacts" id="cancelButton">Cancel</a></button>
+        </div>
+    </div>

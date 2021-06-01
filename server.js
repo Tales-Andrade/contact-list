@@ -12,9 +12,10 @@ const flash = require('connect-flash');
 const ExpressError = require('./public/assets/js/ExpressError');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
-const User = require('./src/models/users');
+const User = require('./src/models/user');
 const mongoSanitize = require('express-mongo-sanitize');
 const userRoutes = require('./src/routes/users');
+const contactRoutes = require('./src/routes/contacts');
 //const helmet = require('helmet');
 const csrf = require('csurf');
 const { globalMiddleware, checkCsrfError, csrfMiddleware } = require('./src/middlewares/middleware');
@@ -74,6 +75,7 @@ app.use(checkCsrfError);
 app.use(csrfMiddleware);
 
 app.use('/', userRoutes);
+app.use('/contacts', contactRoutes);
 
 app.get('/', (req, res) => {
     res.render('index');

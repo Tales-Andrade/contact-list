@@ -1,4 +1,4 @@
-const User = require('../models/users');
+const User = require('../models/user');
 
 module.exports.renderRegister = (req, res) => {
     res.render('users/register');
@@ -14,7 +14,7 @@ module.exports.register = async (req, res, next) => {
             if (err) return next(err);
 
             req.flash('success', 'Welcome to your contact list!');
-            res.redirect('/');
+            res.redirect('/contacts');
         });
     } catch (e) {
         console.log(e);
@@ -29,7 +29,7 @@ module.exports.renderLogin = (req, res) => {
 
 module.exports.login = (req, res) => {
     req.flash('success', 'Welcome back to your contact list!');
-    const redirectUrl = req.session.returnTo || '/';
+    const redirectUrl = req.session.returnTo || '/contacts';
     delete req.session.returnTo;
     res.redirect(redirectUrl);
 };
