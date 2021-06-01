@@ -10,5 +10,11 @@ router.route('/register')
     .post(catchAsync(users.register))
 
 // Login Routes
+router.route('/login')
+    .get(users.renderLogin)
+    .post(passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), users.login)
+
+// Logout Routes
+router.get('/logout', users.logout);
 
 module.exports = router;
