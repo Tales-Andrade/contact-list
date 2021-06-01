@@ -79,10 +79,6 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-app.get('/favicon.ico', (req, res) => {
-    res.status(204)
-});
-
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page Not Found', 404));
 });
@@ -92,7 +88,7 @@ app.use((err, req, res, next) => {
 
     if (!err.message) err.message = 'An error has occurred';
 
-    res.status().render('error', { err });
+    res.status(statusCode).render('error', { err });
 });
 
 app.on('ready!', () => {
