@@ -27,7 +27,7 @@ module.exports.contactSchema = Joi.object({
     contact: Joi.object({
         name: Joi.string().required().escapeHTML(),
         lastName: Joi.string().required().escapeHTML(),
-        email: Joi.string().required().escapeHTML(),
+        email: Joi.string().email().required().escapeHTML(),
         telephone: Joi.string().required().escapeHTML(),
     }).required(),
     _csrf: Joi.string().required().escapeHTML()
