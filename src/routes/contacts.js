@@ -11,4 +11,11 @@ router.route('/')
 
 router.get('/new', isLoggedIn, contacts.renderNewForm);
 
+router.route('/:id')
+    //     .get(catchAsync(contacts.showContact))
+    .put(isLoggedIn, validateContact, catchAsync(contacts.updateContact))
+//     .delete(isLoggedIn, catchAsync(contacts.deleteCampground))
+
+router.get('/:id/edit', isLoggedIn, catchAsync(contacts.renderEditForm))
+
 module.exports = router;

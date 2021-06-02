@@ -10,13 +10,14 @@ const engine = require('ejs-mate');
 const session = require('express-session');
 const flash = require('connect-flash');
 const ExpressError = require('./public/assets/js/ExpressError');
+const methodOverride = require('method-override');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./src/models/user');
+//const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const userRoutes = require('./src/routes/users');
 const contactRoutes = require('./src/routes/contacts');
-//const helmet = require('helmet');
 const csrf = require('csurf');
 const { globalMiddleware, checkCsrfError, csrfMiddleware } = require('./src/middlewares/middleware');
 
@@ -42,6 +43,7 @@ app.set('views', path.join(__dirname, 'src', 'views'));
 
 // Enables to receive req.body
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(mongoSanitize());

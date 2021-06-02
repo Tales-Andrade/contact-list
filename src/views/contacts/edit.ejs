@@ -1,0 +1,60 @@
+<% layout('layouts/boilerplate') %>
+    <div class="row">
+        <h1 class="text-center">
+            Edit Contact
+        </h1>
+        <div class="col-md-6 offset-md-3">
+            <form action="/contacts/<%= contact._id %>?_method=PUT" method="POST" class="validated-form" novalidate>
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <div class="mb-3">
+                    <label class="form-label" for="name">Name</label>
+                    <input class="form-control" type="text" id="name" name="contact[name]" value="<%= contact.name %> "
+                        required>
+                    <div class="valid-feedback">
+                        This is a valid input!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please choose a first name.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="lastName">Last Name</label>
+                    <input class="form-control" type="text" id="lastName" name="contact[lastName]"
+                        value="<%= contact.lastName %> " required>
+                    <div class="valid-feedback">
+                        This is a valid input!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please choose a last name.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="email">Email</label>
+                    <input class="form-control" type="email" id="email" name="contact[email]"
+                        value="<%= contact.email %> " required>
+                    <div class="valid-feedback">
+                        This is a valid input!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please choose a valid email.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="telephone">Telephone</label>
+                    <input class="form-control" type="text" id="telephone" name="contact[telephone]"
+                        value="<%= contact.telephone %> " required>
+                    <div class="valid-feedback">
+                        This is a valid input!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please choose a valid telephone.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-info">Update Contact</button>
+                </div>
+            </form>
+            <button class="btn btn-warning"><a href="/contacts/<%= contact._id %>" class="linkButton">Back To
+                    Contact</a></button>
+        </div>
+    </div>
