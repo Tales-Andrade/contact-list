@@ -6,34 +6,41 @@
             <div class="col-lg-8 my-3">
                 <h1 class="text-center">Contact List</h1>
                 <p class="text-center lead">Your contacts are below:</p>
-
-                <% if(contacts.length> 0) { %>
+                <% if(contacts.length> 0 && currentUser) { %>
                     <div class="responsive-table">
                         <table class="table my-3">
-                            <% contacts.forEach(contact=> { %>
-                                <tr>
-                                    <td>
-                                        <%= contact.name %>
-                                    </td>
-                                    <td>
-                                        <%= contact.lastName %>
-                                    </td>
-                                    <td>
-                                        <%= contact.email %>
-                                    </td>
-                                    <td>
-                                        <%= contact.telephone %>
-                                    </td>
-                                    <td><a href="/contacts/<%= contact._id %>/edit">Edit</a></td>
-                                    <td style="padding: 2px 0 0 0">
-                                        <form class="d-inline" action="/contacts/<%= contact._id %>?_method=DELETE"
-                                            method="POST">
-                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                            <button class="btn btn-link text-danger">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                <% }); %>
+                            <% let count=0; %>
+                                <% contacts.forEach(contact=> { %>
+                                    <% if (contact.user.equals(currentUser._id)) { %>
+                                        <tr>
+                                            <td>
+                                                <%= contact.name %>
+                                            </td>
+                                            <td>
+                                                <%= contact.lastName %>
+                                            </td>
+                                            <td>
+                                                <%= contact.email %>
+                                            </td>
+                                            <td>
+                                                <%= contact.telephone %>
+                                            </td>
+                                            <td><a href="/contacts/<%= contact._id %>/edit">Edit</a></td>
+                                            <td style="padding: 2px 0 0 0">
+                                                <form class="d-inline"
+                                                    action="/contacts/<%= contact._id %>?_method=DELETE" method="POST">
+                                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                                    <button class="btn btn-link text-danger">Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <% count +=1; %>
+                                            <% } %>
+                                                <% }); %>
+                                                    <% if (count===0) {%>
+                                                        <p class="text-center lead">There are no contacts on your
+                                                            contact list.</p>
+                                                        <% } %>
                         </table>
                     </div>
                     <% } else { %>

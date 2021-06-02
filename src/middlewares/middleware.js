@@ -1,5 +1,6 @@
 const { contactSchema } = require('../../schemas.js');
 const ExpressError = require('../../public/assets/js/ExpressError');
+const Contact = require('../models/contact');
 
 module.exports.globalMiddleware = (req, res, next) => {
     res.locals.error = req.flash('error');
@@ -34,6 +35,17 @@ module.exports.isLoggedIn = (req, res, next) => {
         req.flash('error', 'You must be signed in!');
         return res.redirect('/login');
     }
+    next();
+}
+
+module.exports.isUser = async (req, res, next) => {
+    const contact = await Contact.findById(req.params.id);
+
+    if (!contact.user.equals(req.user._id)) {
+        req.flash('error', 'You do not have permission to do that!');
+        return res.redirect(`/contacts/${req.params.id}`);
+    }
+
     next();
 }
 

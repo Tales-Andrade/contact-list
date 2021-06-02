@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
-const { catchAsync, isLoggedIn, validateContact } = require('../middlewares/middleware');
+const { catchAsync, isLoggedIn, isUser, validateContact } = require('../middlewares/middleware');
 const Contact = require('../models/contact');
 const contacts = require('../controllers/contacts');
 
@@ -13,9 +13,9 @@ router.get('/new', isLoggedIn, contacts.renderNewForm);
 
 router.route('/:id')
     .get(catchAsync(contacts.showContact))
-    .put(isLoggedIn, validateContact, catchAsync(contacts.updateContact))
-    .delete(isLoggedIn, catchAsync(contacts.deleteContact))
+    .put(isLoggedIn, isUser, validateContact, catchAsync(contacts.updateContact))
+    .delete(isLoggedIn, isUser, catchAsync(contacts.deleteContact))
 
-router.get('/:id/edit', isLoggedIn, catchAsync(contacts.renderEditForm))
+router.get('/:id/edit', isLoggedIn, isUser, catchAsync(contacts.renderEditForm))
 
 module.exports = router;
