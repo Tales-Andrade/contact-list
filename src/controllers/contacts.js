@@ -1,7 +1,8 @@
 const Contact = require('../models/contact');
 
 module.exports.index = async (req, res) => {
-    res.render('contacts/index');
+    const contacts = await Contact.find({}).populate('user');
+    res.render('contacts/index', { contacts });
 }
 
 module.exports.renderNewForm = (req, res) => {
