@@ -14,7 +14,7 @@ router.get('/new', isLoggedIn, contacts.renderNewForm);
 router.route('/:id')
     .get(catchAsync(contacts.showContact))
     .put(isLoggedIn, validateContact, catchAsync(contacts.updateContact))
-//  .delete(isLoggedIn, catchAsync(contacts.deleteCampground))
+    .delete(isLoggedIn, catchAsync(contacts.deleteContact))
 
 router.get('/:id/edit', isLoggedIn, catchAsync(contacts.renderEditForm))
 

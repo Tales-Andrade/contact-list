@@ -45,3 +45,9 @@ module.exports.updateContact = async (req, res) => {
     req.flash('success', 'Successfully updated contact!');
     res.redirect(`/contacts/${contact._id}`);
 }
+
+module.exports.deleteContact = async (req, res) => {
+    await Contact.findByIdAndDelete(req.params.id);
+    req.flash('success', 'Successfully deleted contact!');
+    res.redirect('/contacts');
+}
