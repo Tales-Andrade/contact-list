@@ -78,7 +78,7 @@ app.use('/', userRoutes);
 app.use('/contacts', contactRoutes);
 
 app.get('/', (req, res) => {
-    res.render('index');
+    res.render('home');
 });
 
 app.all('*', (req, res, next) => {
