@@ -16,6 +16,17 @@ module.exports.createContact = async (req, res, next) => {
     res.redirect(`/contacts/${contact._id}`);
 }
 
+module.exports.showContact = async (req, res) => {
+    const contact = await Contact.findById(req.params.id).populate('user');
+
+    if (!contact) {
+        req.flash('error', 'Cannot find that contact!');
+        return res.redirect('/contacts');
+    }
+
+    res.render('contacts/show', { contact });
+}
+
 module.exports.renderEditForm = async (req, res) => {
     const contact = await Contact.findById(req.params.id);
 
