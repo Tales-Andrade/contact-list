@@ -95,9 +95,10 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render('error', { err });
 });
 
+const port = process.env.PORT || 3000;
+
 app.on('ready!', () => {
-    app.listen(3000, () => {
-        console.log('Access on the link http://localhost:3000');
-        console.log('Server has been executed on port 3000!');
+    app.listen(port, () => {
+        console.log(`Server has been executed on port ${port}!`);
     });
 });
